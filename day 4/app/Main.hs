@@ -1,12 +1,17 @@
 module Main where
 import AdventOfCode (computeResult)
 
-computeTest :: IO Int
-computeTest = do
+testFile = do
   file <- readFile "test.txt"
-  return (computeResult file)
+  let testResult = computeResult file
+  print (testResult == 13, testResult)
+
+runProgram = do
+  file <- readFile "input.txt"
+  let testResult = computeResult file
+  print (20117 == testResult, testResult)
 
 main :: IO ()
 main = do
-  testResult <- computeTest
-  print (13 == testResult)
+  testFile
+  runProgram
