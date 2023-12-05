@@ -1,18 +1,16 @@
 module Main where
-import AdventOfCode (computeResult)
+import AdventOfCode (computeResultP2)
 
--- testFile = do
---   file <- readFile "test.txt"
---   let testResult = computeResult file
---   print (testResult == 13, testResult)
-
--- runProgram = do
---   file <- readFile "input.txt"
---   let testResult = computeResult file
---   print (20117 == testResult, testResult)
+testFile = do
+  file <- readFile "test.txt"
+  let totalGames = computeResultP2 file
+  print (totalGames == 30, totalGames)
+part2File = do
+  file <- readFile "input.txt"
+  let totalGames = computeResultP2 file
+  print (totalGames == 13768818, totalGames)
 
 main :: IO ()
 main = do
---   testFile
---   runProgram
-    print "TODO"
+  testFile
+  part2File
