@@ -5,14 +5,16 @@ import Data.Void (Void)
 computeResult :: String -> Int
 computeResult str =  sumScores $ mapWinningNumbers $ mapGamesToTuples $ removeGameLabels (splitGames str)
 
-
 computeResultP2 :: [Char] -> Int
 computeResultP2 str = do
   let games = mapIndexToEach $ mapWinningNumbers $ mapGamesToTuples $ removeGameLabels (splitGames str)  
-  length (mapRemoveIndex (cloneMachine games games games))
-  
+  length (cloneMachine games games games)
 
 
+{- Using "list" as a source of truth,
+   iterate over the results of list2 until "computedList" returns nothing
+   append of computed list onto the output list 
+-}
 cloneMachine :: [(Int, [Int])] -> [(Int, [Int])] -> [(Int, [Int])] -> [(Int, [Int])]
 cloneMachine list list2 output
   | remaining == 0 = output
@@ -21,26 +23,22 @@ cloneMachine list list2 output
     computedList = cloneList list list2
     remaining = length computedList
 
+-- takes games from the source list based on the offset and total winning entries
 takeWinnersAtPosition :: [Int] -> Int -> [[Int]] -> [[Int]]
 takeWinnersAtPosition x i list = take (length x) (drop i list)
 
+-- iterate over the game list and add an index to each
 addIndexToEach :: [[Int]] -> Int -> [(Int, [Int])] -> [(Int, [Int])]
 addIndexToEach (x : xs) i output
   | null xs =  output ++ [(i, x)]
   | otherwise = addIndexToEach xs (i+1) output ++ [(i, x)]
-
-removeIndex :: (Int, [Int]) -> [Int]
-removeIndex (_, game) = game
-
-mapRemoveIndex :: [(Int, [Int])] -> [[Int]]
-mapRemoveIndex = map removeIndex
-
 mapIndexToEach :: [[Int]] -> [(Int, [Int])]
 mapIndexToEach games = reverse (addIndexToEach games 1 [])
 
+-- clone games from the source list based on the amount of games won
 cloneGames :: [(Int, [Int])] -> (Int, [Int]) -> [(Int, [Int])]
 cloneGames list (index, games) = take (length games) (drop index list)
-
+-- clones a list of games using a source list to clone from
 cloneList :: [(Int, [Int])] -> [(Int, [Int])] -> [(Int, [Int])]
 cloneList list = concatMap (cloneGames list)
 
