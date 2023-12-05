@@ -13,7 +13,7 @@ computeResultP2 str = do
 
 {- Using "list" as a source of truth,
    iterate over the results of list2 until "computedList" returns nothing
-   append of computed list onto the output list 
+   append computed list onto the output list 
 -}
 cloneMachine :: [(Int, [Int])] -> [(Int, [Int])] -> [(Int, [Int])] -> [(Int, [Int])]
 cloneMachine list list2 output
